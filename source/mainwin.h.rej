@@ -1,0 +1,10 @@
+diff a/source/mainwin.h b/source/mainwin.h	(rejected hunks)
+@@ -76,7 +79,7 @@ private:
+     Tmeter         *_tmeter;
+     X_textip       *_textln;
+     int             _ttimer;
+-    char            _statefile [1024];
++    string          _statefile;
+     bool            _dirty;
+     bool            _managed;
+ };
