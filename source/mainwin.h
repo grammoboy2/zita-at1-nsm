@@ -79,6 +79,10 @@ private:
     X_tbutton      *_bchan;
     int             _midich;
     int             _ttimer;
+    char            _statefile [1024];
+    bool            _dirty;
+    bool            _managed;
+
 };
 
 
