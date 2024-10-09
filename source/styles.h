@@ -54,6 +54,7 @@ extern X_button_style bstyle1;
 extern XImage  *notesect_img;
 extern XImage  *ctrlsect_img;
 extern XImage  *redzita_img;
+extern XImage  *sm_img;
 extern XImage  *b_llat_img;
 extern XImage  *b_midi_img;
 extern XImage  *b_note_img;
