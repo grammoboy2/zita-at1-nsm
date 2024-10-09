@@ -1,0 +1,12 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=zita-at1
+Comment=An 'autotuner' Jack application.
+Exec=zita-at1
+Icon=zita-at1
+Terminal=false
+StartupNotify=false
+X-NSM-Capable=true
+X-NSM-Exec=zita-at1
+Categories=AudioVideo;Audio;
