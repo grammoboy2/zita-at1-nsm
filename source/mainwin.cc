@@ -17,7 +17,8 @@
 //
 // ----------------------------------------------------------------------------
 
-
+#include <fstream>
+#include <iostream>
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
@@ -25,6 +26,7 @@
 #include "global.h"
 #include "mainwin.h"
 #include "nsm.h"
+
 
 extern NSM_Client *nsm;
 
@@ -294,6 +296,12 @@ void Mainwin::handle_callb (int type, X_window *W, XEvent *E)
 	    break;
 	}
 	break;
+    }
+
+    if (!_dirty)
+    {
+        if (nsm) nsm->is_dirty ();
+        _dirty = true;
     }
 }
 
