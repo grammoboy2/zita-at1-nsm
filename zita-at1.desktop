@@ -2,7 +2,7 @@
 Version=1.0
 Type=Application
 Name=zita-at1
-Comment=An 'autotuner' Jack application.
+Comment=Autotune JACK application.
 Exec=zita-at1
 Icon=zita-at1
 Terminal=false
