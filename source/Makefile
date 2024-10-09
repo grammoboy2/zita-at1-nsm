@@ -32,10 +32,10 @@ all:	zita-at1
 
 
 ZITA-AT1_O = zita-at1.o styles.o jclient.o mainwin.o png2img.o guiclass.o \
-             button.o rotary.o tmeter.o retuner.o
+             button.o rotary.o tmeter.o retuner.o nsm.o nsmclient.o
 zita-at1:	CPPFLAGS += $(shell pkgconf --cflags freetype2)
 zita-at1:	LDLIBS += -lclxclient -lclthreads -lzita-resampler -lcairo \
-	-lfftw3f -ljack -lpthread -lpng -lXft -lX11 -lrt
+	-lfftw3f -ljack -lpthread -lpng -lXft -lX11 -lrt -llo -lpthread
 zita-at1:	$(ZITA-AT1_O) 
 	$(CXX) $(LDFLAGS) -o $@ $(ZITA-AT1_O) $(LDLIBS)
 $(ZITA-AT1_O):
