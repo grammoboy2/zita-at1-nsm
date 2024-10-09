@@ -32,6 +32,7 @@ X_button_style bstyle1;
 XImage  *notesect_img;
 XImage  *ctrlsect_img;
 XImage  *redzita_img;
+XImage  *sm_img;
 XImage  *b_note_img;
 XImage  *b_llat_img;
 XImage  *b_midi_img;
@@ -77,6 +78,7 @@ void styles_init (X_display *disp, X_resman *xrm)
     notesect_img = loadpng ("notesect", disp, XftColors [C_MAIN_BG]);
     ctrlsect_img = loadpng ("ctrlsect", disp, XftColors [C_MAIN_BG]);
     redzita_img  = loadpng ("redzita",  disp, XftColors [C_MAIN_BG]); 
+    sm_img       = loadpng ("sm",   disp, XftColors [C_MAIN_BG]);
     b_llat_img   = loadpng ("llat", disp, XftColors [C_MAIN_BG]);
     b_midi_img   = loadpng ("midi", disp, XftColors [C_MAIN_BG]);
     b_note_img   = loadpng ("note", disp, XftColors [C_MAIN_BG]);
@@ -155,6 +157,7 @@ void styles_fini (X_display *disp)
     XDestroyImage (notesect_img);
     XDestroyImage (ctrlsect_img);
     XDestroyImage (redzita_img);
+    XDestroyImage (sm_img);
     XDestroyImage (b_midi_img);
     XDestroyImage (b_note_img);
     XDestroyImage (Tmeter::_scale);
