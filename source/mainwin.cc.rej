@@ -1,4 +1,6 @@
 diff a/source/mainwin.cc b/source/mainwin.cc	(rejected hunks)
+--- a/source/mainwin.cc 
++++ b/source/mainwin.cc
 @@ -58,17 +62,17 @@ Mainwin::Mainwin (X_rootwin *parent, X_resman *xres, int xp, int yp, Jclient *jc
          _bnote [i] = new Pbutt1 (this, this, &b_note_img, x, y, i);
          _bnote [i]->set_state (1);
