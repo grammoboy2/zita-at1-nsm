@@ -19,7 +19,7 @@
 
 
 #ifndef __ROTARY_H
-#define	__ROTARY_H
+#define        __ROTARY_H
 
 
 #include <cairo/cairo.h>

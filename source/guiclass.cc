@@ -104,9 +104,9 @@ int Rlinctl::set_count (int u)
     if (u > _cm) u = _cm;
     if (u != _count)
     {
-	_count = u;
-	_value = _vmin + u * (_vmax - _vmin) / _cm;
-	_angle = 270.0 * ((double) u / _cm - 0.5);
+        _count = u;
+        _value = _vmin + u * (_vmax - _vmin) / _cm;
+        _angle = 270.0 * ((double) u / _cm - 0.5);
         return DELTA;
     }
     return 0;
@@ -170,9 +170,9 @@ int Rlogctl::set_count (int u)
     if (u > _cm) u = _cm;
     if (u != _count)
     {
-	_count = u;
-	_value = exp (_vmin + u * (_vmax - _vmin) / _cm);
-	_angle = 270.0 * ((double) u / _cm - 0.5);
+        _count = u;
+        _value = exp (_vmin + u * (_vmax - _vmin) / _cm);
+        _angle = 270.0 * ((double) u / _cm - 0.5);
         return DELTA;
     }
     return 0;

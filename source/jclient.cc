@@ -32,7 +32,7 @@ Jclient::Jclient (const char *jname, const char *jserv) :
     _active (false),
     _jname (0)
 {
-    init_jack (jname, jserv);  
+    init_jack (jname, jserv);
 }
 
 
@@ -89,7 +89,7 @@ void Jclient::close_jack ()
 
 void Jclient::jack_static_shutdown (void *arg)
 {
-    ((Jclient *) arg)->jack_shutdown ();    
+    ((Jclient *) arg)->jack_shutdown ();
 }
 
 

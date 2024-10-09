@@ -111,16 +111,16 @@ XImage *png2img (const char *file, X_display *disp, const XftColor *bgnd)
 
     for (y = 0; y < dy; y++)
     {
-	p = data [y];
+        p = data [y];
         for (x = 0; x < dx; x++)
-	{
-	    va = (dp == 4) ? (p [3] / 255.0f) : 1;
-	    pix = ((unsigned long)((p [0] * va + (1 - va) * br) * vr) & mr) 
+        {
+            va = (dp == 4) ? (p [3] / 255.0f) : 1;
+            pix = ((unsigned long)((p [0] * va + (1 - va) * br) * vr) & mr)
                 | ((unsigned long)((p [1] * va + (1 - va) * bg) * vg) & mg)
                 | ((unsigned long)((p [2] * va + (1 - va) * bb) * vb) & mb);
-	    XPutPixel (image, x, y, pix);
-	    p += dp;
-	}
+            XPutPixel (image, x, y, pix);
+            p += dp;
+        }
     }
 
     png_destroy_read_struct (&png_ptr, &png_info, 0);

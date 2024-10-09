@@ -24,14 +24,18 @@
 #include "styles.h"
 #include "global.h"
 #include "mainwin.h"
+#include "nsm.h"
 
+extern NSM_Client *nsm;
 
 Mainwin::Mainwin (X_rootwin *parent, X_resman *xres, int xp, int yp, Jclient *jclient) :
     A_thread ("Main"),
     X_window (parent, xp, yp, XSIZE, YSIZE, XftColors [C_MAIN_BG]->pixel),
     _stop (false),
     _xres (xres),
-    _jclient (jclient)
+    _jclient (jclient),
+    _dirty (false),
+    _managed (false)
 {
     X_hints     H;
     char        s [256];
@@ -107,8 +111,8 @@ Mainwin::Mainwin (X_rootwin *parent, X_resman *xres, int xp, int yp, Jclient *jc
     _jclient->retuner ()->set_corrgain (_rotary [R_CORR]->value ());
     _jclient->retuner ()->set_corroffs (_rotary [R_OFFS]->value ());
 
-    x_add_events (ExposureMask); 
-    x_map (); 
+    x_add_events (ExposureMask);
+    x_map ();
     set_time (0);
     inc_time (500000);
 }
@@ -131,7 +135,7 @@ int Mainwin::process (void)
     {
     case EV_TIME:
         handle_time ();
-	break;
+        break;
     }
     return e;
 }
@@ -142,8 +146,8 @@ void Mainwin::handle_event (XEvent *E)
     switch (E->type)
     {
     case Expose:
-	expose ((XExposeEvent *) E);
-	break;  
+        expose ((XExposeEvent *) E);
+        break;
  
     case ClientMessage:
         clmesg ((XClientMessageEvent *) E);
@@ -175,18 +179,18 @@ void Mainwin::handle_time (void)
     k = _jclient->retuner ()->get_noteset ();
     for (i = 0; i < 12; i++)
     {
-	s = _bnote [i]->state ();
-	if (k & 1) s |= 2;
-	else s &= ~2;
+        s = _bnote [i]->state ();
+        if (k & 1) s |= 2;
+        else s &= ~2;
         _bnote [i]->set_state (s);
-	k >>= 1;
+        k >>= 1;
     }
     k = _jclient->get_midiset();
     if (k) _bmidi->set_state (_bmidi->state () | 1);
     else   _bmidi->set_state (_bmidi->state () & ~1);
     if (_ttimer)
     {
-	if (--_ttimer == 0) _textln->x_unmap ();
+        if (--_ttimer == 0) _textln->x_unmap ();
     }
     inc_time (50000);
     XFlush (dpy ());
@@ -341,6 +345,106 @@ void Mainwin::redraw (void)
     XPutImage (dpy (), win (), dgc (), ctrlsect_img, 0, 0, x, 0, 315, 75);
     x = XSIZE - 35;
     XPutImage (dpy (), win (), dgc (), redzita_img, 0, 0, x, 0, 35, 75);
+    if (_managed)
+    {
+        x += 10;
+        XPutImage (dpy (), win (), dgc (), sm_img,      0, 0,   x, 60, 19, 10);
+    }
+}
+
+
+void Mainwin::load_state ()
+{
+    FILE * File;
+    File = fopen (_statefile, "r");
+
+    if (File != NULL)
+    {
+        char parameter [20];
+        float  tune = 0.0f;
+        float  bias = 0.0f;
+        float  filt = 0.0f;
+        float  corr = 0.0f;
+        float  offs = 0.0f;
+        int   notes = 0xFFF;
+        int      xp = 100;
+        int      yp = 100;
+        int i, k;
+
+        fscanf (File, "%s %f %s %f %s %f %s %f %s %f %s %X %s %d %s %d",
+                parameter, &tune,
+                parameter, &bias,
+                parameter, &filt,
+                parameter, &corr,
+                parameter, &offs,
+                parameter, &notes,
+                parameter, &xp,
+                parameter, &yp);
+        fclose (File);
+
+        _rotary [R_TUNE]->set_value (tune);
+        _jclient->retuner ()->set_refpitch (_rotary [R_TUNE]->value ());
+        _rotary [R_BIAS]->set_value (bias);
+        _jclient->retuner ()->set_notebias (_rotary [R_BIAS]->value ());
+        _rotary [R_FILT]->set_value (filt);
+        _jclient->retuner ()->set_corrfilt (_rotary [R_FILT]->value ());
+        _rotary [R_CORR]->set_value (corr);
+        _jclient->retuner ()->set_corrgain (_rotary [R_CORR]->value ());
+        _rotary [R_OFFS]->set_value (offs);
+        _jclient->retuner ()->set_corroffs (_rotary [R_OFFS]->value ());
+        for (i = 0; i < 12; i++)
+        {
+            _bnote [i]->set_state (1 * (0x1 & notes));
+            notes >>= 1;
+        }
+        _notes = notes;
+        _jclient->set_notemask (_notes);
+        x_move (xp, yp);
+        redraw ();
+    }
+}
+
+
+void Mainwin::save_state (void)
+{
+    FILE * File;
+    File = fopen (_statefile, "w");
+
+    if (File != NULL)
+    {
+        float tune = _rotary [R_TUNE]->value ();
+        float bias = _rotary [R_BIAS]->value ();
+        float filt = _rotary [R_FILT]->value ();
+        float corr = _rotary [R_CORR]->value ();
+        float offs = _rotary [R_OFFS]->value ();
+        int  notes = _notes;
+
+        fprintf (File, "/autotune/tune\t%f\n/autotune/bias\t%f\n", tune, bias);
+        fprintf (File, "/autotune/filt\t%f\n/autotune/corr\t%f\n", filt, corr);
+        fprintf (File, "/autotune/offs\t%f\n/autotune/notes\t%X\n", offs, notes);
+
+        Window w_return;
+        int x_s, y_s, x, y;
+        unsigned int w, h;
+        unsigned int b_w;
+        unsigned int d;
+
+        XGetGeometry (dpy (), win (), &w_return, &x, &y, &w, &h, &b_w, &d);
+        XTranslateCoordinates (dpy (), win (), pwin ()->win (),
+                               -x, -y, &x_s, &y_s, &w_return);
+
+        fprintf(File, "/window/x\t%d\n/window/y\t%d\n", x_s, y_s);
+        fclose (File);
+        _dirty = false;
+        if (nsm) nsm->is_clean();
+    }
+}
+
+
+void Mainwin::set_managed (bool m)
+{
+    _managed = m;
+    redraw ();
 }
 
 

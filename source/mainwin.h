@@ -19,7 +19,7 @@
 
 
 #ifndef __MAINWIN_H
-#define	__MAINWIN_H
+#define __MAINWIN_H
 
 
 #include <clxclient.h>
@@ -42,6 +42,10 @@ public:
 
     void stop (void) { _stop = true; }
     int process (void); 
+    void load_state (void);
+    void save_state (void);
+    void set_managed (bool);
+    void set_statefile (const char *s) { sprintf(_statefile, "%s", s); }
 
 private:
 

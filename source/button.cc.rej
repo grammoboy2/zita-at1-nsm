@@ -1,0 +1,10 @@
+diff a/source/button.cc b/source/button.cc	(rejected hunks)
+@@ -32,7 +32,7 @@ int PushButton::_button = 0;
+ PushButton::PushButton (X_window     *parent,
+                         X_callback   *cbobj,
+                         ButtonImg    *image,
+-		        int  xp,
++                        int  xp,
+                         int  yp,
+                         int  cbind) :
+ 
