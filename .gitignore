@@ -1,5 +1,7 @@
 .ccls-cache*
 source/zita-rev1
+source/zita-at1
+
 # Prerequisites
 *.d
 
