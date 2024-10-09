@@ -49,11 +49,13 @@ install:	all
 	install -m 755 zita-at1 $(DESTDIR)$(BINDIR)
 	rm -rf $(DESTDIR)$(SHARED)/*
 	install -m 644 ../share/* $(DESTDIR)$(SHARED)
+	install -Dm644 -t $(PREFIX)/share/applications/ ../zita-at1.desktop
 
 
 uninstall:
 	rm -f  $(DESTDIR)$(BINDIR)/zita-at1
 	rm -rf $(DESTDIR)$(SHARED)
+	rm -f $(PREFIX)/share/applications/zita-at1.desktop
 
 
 clean:
