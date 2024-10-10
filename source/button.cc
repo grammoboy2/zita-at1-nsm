@@ -27,12 +27,12 @@ int PushButton::_button = 0;
 
 PushButton::PushButton (X_window     *parent,
                         X_callback   *cbobj,
-			int           cbind,
+			                  int           cbind,
                         XImage       *image,
-		        int  xp,
+		                    int  xp,
                         int  yp,
-			int  xs,
-			int  ys) :
+                        int  xs,
+                        int  ys) :
     X_window (parent, xp, yp, xs, ys, 0),
     _cbobj (cbobj),
     _cbind (cbind),
