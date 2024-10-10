@@ -38,37 +38,37 @@ XImage *png2img (const char *file, X_display *disp, const XftColor *bgnd)
     F = fopen (file, "r");
     if (!F)
     {
-	fprintf (stderr, "Can't open '%s'\n", file);
-	return 0;
+        fprintf (stderr, "Can't open '%s'\n", file);
+        return 0;
     }
     rv = fread (hdr, 8, 1, F);
     if ((rv != 1) || png_sig_cmp (hdr, 0, 8))
     {
-	fprintf (stderr, "'%s' is not a PNG file\n", file);
+        fprintf (stderr, "'%s' is not a PNG file\n", file);
         fclose (F);
-	return 0;
+        return 0;
     }
     fseek (F, 0, SEEK_SET);
 
     png_ptr = png_create_read_struct (PNG_LIBPNG_VER_STRING, 0, 0, 0);
     if (! png_ptr)
     {
-	fclose (F);
-	return 0;
+        fclose (F);
+        return 0;
     }
     png_info = png_create_info_struct (png_ptr);
     if (! png_info)
     {
         png_destroy_read_struct (&png_ptr, 0, 0);
-	fclose (F);
+	      fclose (F);
         return 0;
     }
     if (setjmp (png_jmpbuf (png_ptr)))
     {
         png_destroy_read_struct (&png_ptr, &png_info, 0);
         fclose (F);
-	fprintf (stderr, "png:longjmp()\n");
-	return 0;
+	      fprintf (stderr, "png:longjmp()\n");
+	      return 0;
     }
 
     png_init_io (png_ptr, F);
