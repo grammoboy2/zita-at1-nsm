@@ -39,9 +39,9 @@ int RotaryCtl::_ry = 0;
 
 RotaryCtl::RotaryCtl (X_window     *parent,
                       X_callback   *cbobj,
-		      int           cbind,
+		                  int           cbind,
                       RotaryGeom   *rgeom,
-		      int           xp,
+		                  int           xp,
                       int           yp) :
 
     X_window (parent,
