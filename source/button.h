@@ -32,11 +32,11 @@ public:
     PushButton (X_window    *parent,
                 X_callback  *cbobj,
                 int          cbind,
-		XImage      *image,
-	        int xp,
+		            XImage      *image,
+	              int xp,
                 int yp,
-		int xs,
-		int ys);
+                int xs,
+                int ys);
 
     virtual ~PushButton (void);
 
