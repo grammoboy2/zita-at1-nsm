@@ -124,27 +124,27 @@ void Jclient::midi_process (int nframes)
     i = 0;
     while (jack_midi_event_get (&E, p, i) == 0)
     {
-	t = E.buffer [0];
+        t = E.buffer [0];
         n = E.buffer [1];
-	v = E.buffer [2];
-	if ((_midichan < 0) || ((t & 0x0F) == _midichan))
-	{
-  	    switch (t & 0xF0)
-	    {
-	    case 0x80:
-	    case 0x90:
-	        if (v && (t & 0x10))_notes [n % 12] += 1;
-  	        else _notes [n % 12] -= 1;
-	        break;
-  	    }
-	}
-	i++;
+        v = E.buffer [2];
+        if ((_midichan < 0) || ((t & 0x0F) == _midichan))
+        {
+            switch (t & 0xF0)
+            {
+                case 0x80:
+                case 0x90:
+                    if (v && (t & 0x10))_notes [n % 12] += 1;
+                    else _notes [n % 12] -= 1;
+                    break;
+            }
+        }
+        i++;
     }
-	
+
     _midimask = 0;
     for (i = 0, b = 1; i < 12; i++, b <<= 1) 
     {
-	if (_notes [i]) _midimask |= b;
+        if (_notes [i]) _midimask |= b;
     }
 }
 
