@@ -79,17 +79,17 @@ Mainwin::Mainwin (X_rootwin *parent, X_resman *xres, int xp, int yp, Jclient *jc
         _bnote [i] = new Pbutt1 (this, this, i, b_note_img, x, y);
         _bnote [i]->set_state (1);
         _bnote [i]->x_map ();
-	if (j == 4) 
-	{
-	    x += 20;
-	    j++;
-	}
-	else
-	{
-	    x += 10;
+        if (j == 4) 
+        {
+            x += 20;
+            j++;
+        }
+        else
+        {
+            x += 10;
             if (j & 1) y += 18;
-	    else       y -= 18;
-	} 
+            else y -= 18;
+        } 
     }
 
 
