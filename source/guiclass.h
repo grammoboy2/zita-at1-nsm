@@ -32,7 +32,7 @@ public:
 
     Pbutt0 (X_window   *parent,
             X_callback *cbobj,
-	    int         cbind,
+	          int         cbind,
             XImage     *image,
             int         xp,
             int         yp) :
@@ -53,7 +53,7 @@ public:
 
     Pbutt1 (X_window   *parent,
             X_callback *cbobj,
-	    int         cbind,
+	          int         cbind,
             XImage     *image,
             int         xp,
             int         yp) :
@@ -78,11 +78,11 @@ public:
              RotaryGeom  *rgeom,
              int          xp,
              int          yp,
-	     int          cm,
-	     int          dd,
+             int          cm,
+             int          dd,
              double       vmin,
-	     double       vmax,
-	     double       vini);
+             double       vmax,
+             double       vini);
 
     virtual void set_value (double v);
     virtual void get_string (char *p, int n);
@@ -112,11 +112,11 @@ public:
              RotaryGeom  *rgeom,
              int          xp,
              int          yp,
-	     int          cm,
-	     int          dd,
+             int          cm,
+             int          dd,
              double       vmin,
-	     double       vmax,
-	     double       vini);
+             double       vmax,
+             double       vini);
 
     virtual void set_value (double v);
     virtual void get_string (char *p, int n);
