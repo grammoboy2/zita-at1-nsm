@@ -51,9 +51,9 @@ public:
 
     RotaryCtl (X_window    *parent,
                X_callback  *cbobj,
-	       int          cbind,
+	             int          cbind,
                RotaryGeom  *rgeom,
-	       int          xp,
+	             int          xp,
                int          yp);
 
     virtual ~RotaryCtl (void);
